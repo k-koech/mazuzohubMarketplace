@@ -1,0 +1,43 @@
+{%extends '../base.html'%}
+{% load static %}
+
+
+{% block content %}
+   
+<div style="margin:0 auto;max-width:600px;background:white">
+   <table role="presentation" cellpadding="0" cellspacing="0" style="font-size:0px;width:100%;background:white" align="center" border="0">
+     <tbody>
+       <tr>
+         <td style="text-align:center;vertical-align:top;font-size:0px;padding:20px 0px">
+           <div aria-labelledby="mj-column-per-100" class="m_-4325811371517037407mj-column-per-100" style="vertical-align:top;display:inline-block;font-size:13px;text-align:left;width:100%">
+             <table role="presentation" cellpadding="0" cellspacing="0" style="vertical-align:top" width="100%" border="0">
+               <tbody>
+                 <tr>
+                   <td style="word-break:break-word;font-size:0px;padding:15px 0px 15px 0px" align="center">
+                     <div style="color:#212121;font-family:'Avenir Next',Avenir,sans-serif;font-size:16px;line-height:40px">
+                       <a href="https://go.auth0.com/y1vVmndg0Z0qWXJ06M00020" style="color:#212121;font-weight:bold;font-family:'Avenir Next',Avenir,sans-serif;font-size:20px;line-height:40px;text-decoration:none" target="_blank" data-saferedirecturl="https://www.google.com/url?hl=en&amp;q=https://go.auth0.com/y1vVmndg0Z0qWXJ06M00020&amp;source=gmail&amp;ust=1479396388094000&amp;usg=AFQjCNGTQUyV0NuwIGi9e2BBPwP9Rly3fg">
+                           New Message
+                       </a>
+                   </div>
+                   </td>
+                 </tr>
+                 <tr>
+                   <td style="word-break:break-word;font-size:0px;padding:0px 30px 15px 30px" align="left">
+                     <div style="color:#222228;font-family:'Avenir Next',Avenir,sans-serif;font-size:14px;line-height:30px">
+                        You've received a message from <strong>{{name}}</strong></br>
+                        <h4 style="font-size:16px"><center>Message</center></h4>
+                        <p>{{message}}</p>
+                    </div>
+                   </td>
+                  </tr>
+
+               </tbody>
+             </table>
+           </div>
+         </td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
+
+{% endblock %}
