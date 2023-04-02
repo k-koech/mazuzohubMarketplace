@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "corsheaders",
     'rest_framework',
+    'django_nextjs',
     'marketplace'
 ]
 CORS_ALLOWED_ORIGINS = [

@@ -103,21 +103,16 @@ def send_password(request):
 @api_view(('PATCH',))
 @permission_classes((IsAuthenticated, ))
 def update_password(request):    
-    email=request.data.get('email')
     oldpassword=request.data.get('oldpassword')
     newpassword=request.data.get('newpassword')
 
-    print("YYYY ", request.user.email)
-
     try:
-        user = User.objects.get(email=email)
+        user = User.objects.get(email=request.user.email)
     except User.DoesNotExist:
         return Response({"email_error":"User with this email doesn't exist!"}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
     if request.method=="PATCH":
-        user=User.objects.get(email=email)
-        print("xxxxx")
-        print(user.password)
+        user=User.objects.get(email=request.user.email)
         print("Check pass ",user.check_password(oldpassword))
         if user.check_password(oldpassword):
             serializer = UserSerializer(user, data=request.data)

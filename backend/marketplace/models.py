@@ -54,6 +54,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 class Profile():
     image =  models.FileField(upload_to='prodile_pics/%Y:%m:%d', null=False)  
     is_username_updated = models.BooleanField(default=False)
+    phone = models.CharField(max_length=15, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class UserPermissions():
+    show_email = models.BooleanField(default=False)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Products(models.Model):
