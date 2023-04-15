@@ -1,11 +1,16 @@
+import { AuthContext } from '@/context/AuthContext';
 import { ProductContext } from '@/context/ProductContext';
+import Image from 'next/image';
 import { useState } from 'react'
 import { useContext } from 'react';
 
 
 function Add() 
 {
-    const {addProduct, authTokens} = useContext(ProductContext);
+    const {addProduct} = useContext(ProductContext);
+
+    const { authTokens} = useContext(AuthContext);
+    console.log("authToken s ", authTokens)
 
     const [title, setTitle] = useState();
     const [region, setRegion] = useState();
@@ -15,6 +20,7 @@ function Add()
     const [description, setDescription] = useState();
     const [displayFile, setDisplayFile] = useState();
      
+    console.log("FIIILES ", file)
     const handleSubmit = e => 
     {    
   
@@ -60,7 +66,7 @@ function Add()
                     <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Image</label>
                     <hr/>
                     <div className='flex'>
-                      <img className="h-16 object-cover" src={displayFile || ""  } alt="" />
+                      <Image width={10} height={10} className="h-16 object-cover" src={displayFile || ""  } alt="" />
                       <div className='flex items-center mx-5 p-3 bg-gray-100'>
                           <input type="file"  onChange={(e) => {setFile(e.target.files[0]); setDisplayFile(URL.createObjectURL(e.target.files[0])); }} className="rounded "/>
                       </div>
@@ -71,7 +77,7 @@ function Add()
                     <textarea value={description || ""}  onChange={(e) => setDescription(e.target.value)} rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Product description..." required></textarea>
                 </div>
                 <div className='text-right'>
-                  <button disabled={authTokens && authTokens.access} type="submit" className="text-white bg-sky-700 hover:red-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                  <button disabled={!authTokens} type="submit" className="text-white bg-sky-700 hover:red-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     Save Item
                   </button>  
                 </div>          

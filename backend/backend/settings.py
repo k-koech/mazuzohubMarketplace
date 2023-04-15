@@ -152,12 +152,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 # development
-MEDIA_URL = '/files/'
+MEDIA_URL = 'files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files/')
 
 
 STATIC_URL = '/static/'
-
+APPEND_SLASH = False
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

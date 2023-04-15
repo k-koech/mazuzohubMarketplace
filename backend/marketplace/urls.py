@@ -3,6 +3,7 @@ from django.urls import path
 from .views.users import register_user, send_password, update_password,users, current_user
 # , sendPassword,updatePassword,index,sendMessage,  UsersViewSet,updateUsername
 from .views.products import addProduct, deleteProduct, products
+from .views.savedproducts import savedProducts,saveProduct
 from .views.categories import addCategory, categories
 
 
@@ -16,6 +17,9 @@ urlpatterns = [
     path('products', products),
     path('products/addproduct', addProduct),
     path('products/<int:pk>', deleteProduct),
+
+    path('savedproducts', savedProducts),
+    path('savedproducts/add', saveProduct),
 
     path('categories', categories),
     path('categories/addcategory', addCategory),

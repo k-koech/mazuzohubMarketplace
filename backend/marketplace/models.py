@@ -42,6 +42,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     password = models.CharField( max_length=100)
+    date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
@@ -52,7 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return f"{self.email}"
     
 class Profile():
-    image =  models.FileField(upload_to='prodile_pics/%Y:%m:%d', null=False)  
+    image =  models.FileField(upload_to='profile_pics/%Y:%m:%d', null=False)  
     is_username_updated = models.BooleanField(default=False)
     phone = models.CharField(max_length=15, unique=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -70,6 +71,11 @@ class Products(models.Model):
     image =  models.FileField(upload_to='products/%Y:%m:%d', null=True)  
     date_posted = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class SavedProducts(models.Model):
+    product = models.ForeignKey(Products, on_delete=models.CASCADE) 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_saved = models.DateTimeField(verbose_name='date posted', auto_now_add=True)
 
 class Categories(models.Model):
     name = models.CharField( max_length=50) 

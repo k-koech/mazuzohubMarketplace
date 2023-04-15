@@ -3,20 +3,24 @@ import Error from "./_child/Error"
 import Fetcher from "@/lib/Fetcher"
 import Link from "next/link"
 import config from "../../config.json"
+import {IMAGES_URL} from "../../config.json"
 import ReactPaginate from 'react-paginate';
 import { useState } from "react"
 import {AiFillHeart, AiOutlineHeart} from "react-icons/ai"
+import Image from "next/image"
 
 
 // {initialData}
-export default function Products({posts}) {
+export default function Products() {
 
   const { data, isLoading, isError } = Fetcher('/products')
 
-    console.log("products home ", posts )
+    console.log("products home ", data )
     console.log("yis ", config.SERVER_URL+"/products")
 
-
+    const myLoader = ({ src, width, quality }) => {
+      return `https://example.com/${src}?w=${width}&q=${quality || 75}`
+    }
   // Pagination
     const [itemsPerPage, setItemsPerPage] = useState(32)
     const [itemOffset, setItemOffset] = useState(0);
@@ -37,15 +41,24 @@ export default function Products({posts}) {
 
   return (
     <>
-    <div className="bg-white mt-10 columns-2 md:columns-4 gap-4 space-y-8 p-8 min-h-[70vh] bgreen-900">
+    { products.length<1?
+      <div className="flex text-xl min-h-[50vh] items-center justify-center">
+          No products found!
+      </div>
+    :
+    <>
+    <div className="bg-white mt-10 columns-2 md:columns-4 gap-4 space-y-8 sm:p-8 min-h-[50vh] sm:min-h-[70vh] bgreen-900">
+        
         {
-        products && products.map((product)=>(
+        products && products.map((product)=>{
+          const imageurl= "http://localhost:8000"+product.image;
+        return (
         <div key={product.id} className="overflow-auto shadow-lg h-min w-full">
             <div className="relative">
-              <img className="object-cover" src={config.IMAGES_URL+product.image} alt="subway" />
+              <Image className="object-cover w-full" width={500} height={500} src={imageurl} alt="subway" />
               <div className="absolute bottom-0 left-0 hover:cursor-pointer m-2">
                {/* <AiOutlineHeart size={30}/> */}
-               <AiFillHeart size={30}/>
+               <AiFillHeart className="text-sky-600 hover:text-blue-700" size={30}/>
               </div>
             </div>
             <div className="p-3 h-min rounded-lg bg-white">
@@ -55,8 +68,11 @@ export default function Products({posts}) {
               </Link>
             </div>
         </div>
-        ))
+        )
+      })
+               
         } 
+        
     </div>
     <div className="flex justify-center items-center whitespace-nowrap overflow-auto">
           <ReactPaginate
@@ -70,6 +86,8 @@ export default function Products({posts}) {
             className="flex gap-4 py-4"
           /> 
     </div>
+    </>
+}
   
 </>
   )

@@ -9,6 +9,7 @@ import Spinner from "@/components/_child/Spinner";
 import Error from "@/components/_child/Error";
 import Image from "next/image"
 import config from "../../../config.json"
+import { AiFillAlert } from "react-icons/ai";
 
 
 export default function Id() 
@@ -28,7 +29,7 @@ export default function Id()
   console.log("Mike j ", product)
 
   return (
-      <div className="flex flex-wrap gap-4 md:flex-nowrap">
+      <div className="min-h-[70vh] flex flex-wrap sm:px-14 md:px-12 lg:px-28 gap-4 md:flex-nowrap">
         <div className="container mx-auto w-full md:w-2/3 border rounded-lg">
           
         <div className="grid gap-4 bg-white">
@@ -39,39 +40,35 @@ export default function Id()
               loop={true}
             >
               <SwiperSlide >
-                <MainSlider />
+                {/* <MainSlider /> */}
                 {/* <h1>kkk</h1> */}
               </SwiperSlide>
             </Swiper>
 
-            <div className="h-[50vh] overflow-hidden">
+            <div className="h-[50vh] flex items-center overflow-hidden">
                 {/* <Image src={product && config.IMAGES_URL+product.image || ""} height={400}  width={1000} quality={100} alt="product" /> */}
-                <Image src={product && config.IMAGES_URL+product.image || ""} alt="" title=""  width="0" height="0" sizes="100vw" className="h-auto w-auto max-h-full max-h-full" />
+                <Image src={`http://localhost:8000${product.image}` || ""} width={400} height={400} className="h-auto w-full " alt="" />
             </div>
 
-            <div className="grid grid-cols-5 gap-4 h-[15vh] bg-green-300">
+            <div className="flex justify-between gap-4 h-[15vh] bg-gray-200">
                 <div className="h-[15vh]">
-                    <img className="h-full w-auto rounded-lg" src="http://127.0.0.1:8000/files/products/2023%3A03%3A25/img4.png" alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
                 </div>
                 <div className="h-[15vh]">
-                    <img className="h-full w-auto rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
                 </div>
                 <div className="h-[15vh]">
-                    <img className="h-full w-auto rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
                 </div>
                 <div className="h-[15vh]">
-                    <img className="h-full w-auto rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="" />
-                </div>
-                <div className="h-[15vh]">
-                    <img className="h-full w-auto rounded-lg" src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
                 </div>
             </div>
         </div>
-
           
-          
-          <div className="p-4 bg-red-300">
-            <h4>{product && product.title}</h4>
+          <div className="p-4 bgh-red-300">
+            <h4 className="text-xl my-3 font-semibold">{product && product.title}</h4>
+            <p className="text-gray-500 text-sm my-4">Posted 5 days ago</p>
             <h6>Ksh. {product && product.price}</h6>
           </div>
         </div>
@@ -80,13 +77,36 @@ export default function Id()
            <div>
             Report ad
            </div>
-          <div className="border rounded-lg p-3 flex items-center space-x-4">
-              <img className="w-10 h-10 rounded-full" src="/images/defaultProfile.png" alt="" />
+          <div className="my-4 border rounded-lg p-3 flex items-center space-x-4">
+              <Image width={10} height={10} className="w-10 h-10 rounded-full" src="/images/defaultProfile.png" alt="" />
               <div className="dark:text-white">
                   <div>{product && product.user.username}</div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">Joined in {product && product.user.created_at}</div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">Joined in {product && product.user.date_joined}</div>
               </div>
           </div>
+
+          <button className="my-5 px-5 py-2 w-full text-sm font-medium text-center text-white bg-sky-700 hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
+                    Show Phone Number
+              </button>
+          <form className="mt-7" >
+              <div className="mb-6">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Send message</label>
+                <textarea rows="4" name="message" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-sky-500 dark:focus:border-sky-500" required />
+              </div>
+              <div className="text-right">
+                  <button type="submit"  className="px-5 py-2 w-full sm:w-auto text-sm font-medium text-center text-white bg-sky-700 rounded-lg hover:bg-sky-800 focus:ring-4 focus:outline-none focus:ring-sky-300 dark:bg-sky-600 dark:hover:bg-sky-700 dark:focus:ring-sky-800">
+                    Send
+                  </button>
+              </div>              
+            </form>
+
+            <div>
+              <h3 className="flex font-bold my-3">Safety Tips <AiFillAlert/></h3>
+              <p>  - Don&apos;t pay in advance, including for delivery</p>
+              <p>  - Meet the seller at a safe public place</p>
+              <p>  - Inspect the item and ensure it&apos;s exactly what you want</p>
+              <p>  - On delivery, check that the item delivered is what was inspected</p>
+            </div>
 
         </div>
       </div>

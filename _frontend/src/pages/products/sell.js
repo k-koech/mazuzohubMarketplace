@@ -1,4 +1,6 @@
 import Add from '@/components/AddProduct'
+// import Image from 'next/image'
+import Image from "next/image"
 
 
 function sell() {
@@ -6,7 +8,8 @@ function sell() {
     <>
     <div className='grid grid-cols-1 sm:grid-cols-2 min-h-[70vh]'>
       <div class="flex justify-center items-center hidden sm:flex">
-         <img className="object-cover" src="/images/sale.png" alt="image loading..." />
+         <Image width={500} height={500}  src="/images/sale.png" alt="image loading..." />
+        
       </div>        
       <div className='bg-white rounded-lg'>
           <Add />

@@ -2,6 +2,7 @@ import { AuthContext } from "@/context/AuthContext";
 import { useContext, useState } from "react";
 import Update_password from "@/components/Update_password";
 import { AiOutlineUser } from "react-icons/ai";
+import Image from "next/image";
 
 export default function Profile()
 {
@@ -35,9 +36,9 @@ export default function Profile()
             <div className="w-full md:w-4/12 md:mx-2">
                 <div className="bg-white p-3">
                     <div className="image overflow-hidden">
-                        <img className="h-auto w-full mx-auto"
+                        {/* <img className="h-auto w-full mx-auto"
                             src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                            alt="" />
+                            alt="" /> */}
                     </div>
                     <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">{authenticatedUser && authenticatedUser.username}</h1>
                     <h3 className="text-gray-600 font-lg text-semibold leading-6">Owner at Her Company Inc.</h3>
@@ -61,7 +62,7 @@ export default function Profile()
 
                 <div className="my-4"></div>
                 <div className="bg-white p-3 hover:shadow">
-                    <div className="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
+                    {/* <div className="flex items-center space-x-3 font-semibold text-gray-900 text-xl leading-8">
                         <span className="text-sky-700">
                             <svg className="h-5 fill-current" xmlns="http://www.w3.org/2000/svg" fill="none"
                                 viewBox="0 0 24 24" stroke="currentColor">
@@ -70,32 +71,21 @@ export default function Profile()
                             </svg>
                         </span>
                         <span>Similar Profiles</span>
-                    </div>
+                    </div> */}
                     <div className="grid grid-cols-3">
-                        <div className="text-center my-2">
-                            <img className="h-16 w-16 rounded-full mx-auto"
+                        {/* <div className="text-center my-2">
+                            <Image width={16} height={16} className="h-16 w-16 rounded-full mx-auto"
                                 src="https://cdn.australianageingagenda.com.au/wp-content/uploads/2015/06/28085920/Phil-Beckett-2-e1435107243361.jpg"
                                 alt="" />
                             <a href="#" className="text-main-color">Kojstantin</a>
                         </div>
                         <div className="text-center my-2">
-                            <img className="h-16 w-16 rounded-full mx-auto"
+                            <Image width={16} height={16} className="h-16 w-16 rounded-full mx-auto"
                                 src="https://avatars2.githubusercontent.com/u/24622175?s=60&amp;v=4"
                                 alt="" />
                             <a href="#" className="text-main-color">James</a>
-                        </div>
-                        <div className="text-center my-2">
-                            <img className="h-16 w-16 rounded-full mx-auto"
-                                src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
-                                alt="" />
-                            <a href="#" className="text-main-color">Natie</a>
-                        </div>
-                        <div className="text-center my-2">
-                            <img className="h-16 w-16 rounded-full mx-auto"
-                                src="https://bucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com/public/images/f04b52da-12f2-449f-b90c-5e4d5e2b1469_361x361.png"
-                                alt="" />
-                            <a href="#" className="text-main-color">Casey</a>
-                        </div>
+                        </div> */}
+                        
                     </div>
                 </div>
             </div>
