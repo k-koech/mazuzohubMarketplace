@@ -1,6 +1,6 @@
 <!-- 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 -->
 # KK Marketplace
-#### The app is a Online Markeplace app, 03/04/2022
+#### The app is a Online Markeplace app, 03/04/2023
 #### **By Kelvin Kipchumba**
 ## Project Description
     Its a App where you can get post your new and old products to get clients online.
@@ -48,4 +48,4 @@ Note: Backend might not work at the time you are viewing this because the free v
 
 ### License
 *Licenced under the [MT-licence](https://github.com/k-koech/mazuzohubMarketplace/blob/master/LICENSE.md)*
-Copyright (c) 2022 **Kelvin Kipchumba
+Copyright (c) 2023 **Kelvin Kipchumba
