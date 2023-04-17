@@ -30,7 +30,6 @@ class ReadOnly(BasePermission):
 # =================Product==================================
 # fetch products
 @api_view(('GET',))
-# @permission_classes((IsAuthenticated, ))
 def products(request):    
     queryset = Products.objects.all().order_by('-id')
     serializer = ProductSerializer(queryset, many=True)
@@ -40,7 +39,7 @@ def products(request):
 # Add product
 @csrf_exempt
 @api_view(('POST',))
-# @permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated, ))
 def addProduct(request):    
     title = request.data.get('title')
     description = request.data.get('description')
@@ -48,14 +47,12 @@ def addProduct(request):
     price = request.data.get('price')
     region = request.data.get('region')
     image = request.data.get('image')
-    user = User.objects.get(id=1)
-    # print("YYYYBBBB ", image)
 
     serializer = ProductSerializer(data=request.data)       
     if serializer.is_valid():
         serializer.save(title=title,description=description,
             color=color,price=price,
-            region=region, image=image, user=user
+            region=region, image=image, user=request.user
         )
         return Response({"success":"Product created successfully!"}, status=201)
     
@@ -63,9 +60,49 @@ def addProduct(request):
         print("Serializers ", serializer.errors)
         return Response({"error":"Something went wrong!"}, status=status.HTTP_406_NOT_ACCEPTABLE)
 
+# Update product
+@csrf_exempt
+@api_view(('PATCH',))
+@permission_classes((IsAuthenticated, ))
+def updateProduct(request, pk=None):    
+    title = request.data.get('title')
+    description = request.data.get('description')
+    color = request.data.get('color')
+    price = request.data.get('price')
+    region = request.data.get('region')
+    image = request.data.get('image')
+
+    products = Products.objects.filter(pk=pk).count()
+    product = Products.objects.get(pk=pk)
+    print("Number ", products)
+    if products > 0 and image:
+            # Check first if the file exists before deleting from the directory
+        if os.path.exists(os.path.join(settings.MEDIA_ROOT, str(product.image)) ):
+            os.remove(os.path.join(settings.MEDIA_ROOT, str(product.image) ))
+
+            dir = os.path.join(settings.MEDIA_ROOT, ("/".join(str(product.image).split("/",-2)[:2])) )
+            list_dir = os.listdir(dir)
+            print("Dir length ",len(list_dir))
+            if len(list_dir) == 0:
+                os.rmdir(dir)
+
+    
+    if products > 0:
+        serializer = ProductSerializer(product,data=request.data)       
+        if serializer.is_valid():
+            serializer.save(title=title,description=description,
+            color=color,price=price, region=region, image=image, user=request.user)
+            return Response({"success":"Updated successfully!!"},status=201)
+        else:
+            print("rrrrr ", serializer.errors)
+            return Response({"errors":serializer.errors},status=201)
+
+    else:
+        return Response({"error":"Something went wrong!"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
 @csrf_exempt
 @api_view(('DELETE',))
-# @permission_classes((IsAuthenticated, ))
+@permission_classes((IsAuthenticated, ))
 def deleteProduct(request, pk=None):    
     products = Products.objects.filter(pk=pk).count()
     if products > 0:        

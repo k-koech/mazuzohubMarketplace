@@ -4,7 +4,7 @@ const nextConfig = {
   //   domains: ['127.0.0.1'],
   // },
   reactStrictMode: false,
-
+  
   images: {
     remotePatterns: [
       {
@@ -18,8 +18,24 @@ const nextConfig = {
         hostname: "images.unsplash.com",
         // port: '8000',
         // pathname: '',
+      },
+      {
+        protocol: 'https',
+        hostname: "marketplace.developerske.com",
+        // port: '8000',
+        // pathname: '',
+      },
+      {
+        protocol: 'https',
+        hostname: "marketplace.developerske.com",
+        // port: '8000',
+        // pathname: '',
       }
     ],
+  },
+
+  env: {
+    baseURL: 'https://marketplace.developerske.com',
   },
 }
 

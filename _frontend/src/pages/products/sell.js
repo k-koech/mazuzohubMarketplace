@@ -3,7 +3,7 @@ import Add from '@/components/AddProduct'
 import Image from "next/image"
 
 
-function sell() {
+export default function sell() {
   return (
     <>
     <div className='grid grid-cols-1 sm:grid-cols-2 min-h-[70vh]'>
@@ -20,4 +20,3 @@ function sell() {
   )
 }
 
-export default sell

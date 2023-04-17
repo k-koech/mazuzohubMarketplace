@@ -1,4 +1,4 @@
 {
-   "SERVER_URL":"http://localhost:8000/api",
-   "IMAGES_URL":"http://127.0.0.1:8000"
+   "SERVER_URL":"https://marketplace.developerske.com/api",
+   "IMAGES_URL":"https://marketplace.developerske.com/"
 }

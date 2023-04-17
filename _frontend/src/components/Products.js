@@ -15,12 +15,7 @@ export default function Products() {
 
   const { data, isLoading, isError } = Fetcher('/products')
 
-    console.log("products home ", data )
-    console.log("yis ", config.SERVER_URL+"/products")
-
-    const myLoader = ({ src, width, quality }) => {
-      return `https://example.com/${src}?w=${width}&q=${quality || 75}`
-    }
+  
   // Pagination
     const [itemsPerPage, setItemsPerPage] = useState(32)
     const [itemOffset, setItemOffset] = useState(0);
@@ -51,7 +46,7 @@ export default function Products() {
         
         {
         products && products.map((product)=>{
-          const imageurl= "http://localhost:8000"+product.image;
+          const imageurl= "https://marketplace.developerske.com"+product.image;
         return (
         <div key={product.id} className="overflow-auto shadow-lg h-min w-full">
             <div className="relative">

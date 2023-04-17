@@ -113,7 +113,15 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'develop3_marketplace',
+#         'HOST':'localhost',
+#         'USER':'develop3_triplek',
+#         'PASSWORD': '[m}yb~K4us1[',
+#         }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -155,9 +163,16 @@ USE_TZ = True
 MEDIA_URL = 'files/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files/')
 
-
 STATIC_URL = '/static/'
 APPEND_SLASH = False
+
+# production
+# STATIC_URL = '/static/'
+# STATIC_ROOT =  '/home/ltobrand/public_html/assets'
+
+# MEDIA_URL = '/files/'
+# MEDIA_ROOT = '/home/ltobrand/public_html/api/files/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 

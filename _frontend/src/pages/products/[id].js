@@ -10,11 +10,17 @@ import Error from "@/components/_child/Error";
 import Image from "next/image"
 import config from "../../../config.json"
 import { AiFillAlert } from "react-icons/ai";
+import {FaTrash} from "react-icons/fa"
+import {FiEdit} from "react-icons/fi"
+import { useContext } from "react";
+import { ProductContext } from "@/context/ProductContext";
+import Link from "next/link";
 
 
 export default function Id() 
 {
   SwiperCore.use([Autoplay])
+  const {deleteProduct} = useContext(ProductContext)
 
   const router = useRouter();
   const { id } = router.query;
@@ -27,8 +33,11 @@ export default function Id()
   }
 
   console.log("Mike j ", product)
+  
 
   return (
+    <>
+    { product?
       <div className="min-h-[70vh] flex flex-wrap sm:px-14 md:px-12 lg:px-28 gap-4 md:flex-nowrap">
         <div className="container mx-auto w-full md:w-2/3 border rounded-lg">
           
@@ -46,22 +55,21 @@ export default function Id()
             </Swiper>
 
             <div className="h-[50vh] flex items-center overflow-hidden">
-                {/* <Image src={product && config.IMAGES_URL+product.image || ""} height={400}  width={1000} quality={100} alt="product" /> */}
-                <Image src={`http://localhost:8000${product.image}` || ""} width={400} height={400} className="h-auto w-full " alt="" />
+                <Image src={`https://marketplace.developerske.com${product && product.image}` || ""} width={400} height={400} className="h-auto w-full " alt="" />
             </div>
 
             <div className="flex justify-between gap-4 h-[15vh] bg-gray-200">
                 <div className="h-[15vh]">
-                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`https://marketplace.developerske.com${product && product.image}`} alt="" />
                 </div>
                 <div className="h-[15vh]">
-                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`https://marketplace.developerske.com${product && product.image}`} alt="" />
                 </div>
                 <div className="h-[15vh]">
-                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`https://marketplace.developerske.com${product && product.image}`} alt="" />
                 </div>
                 <div className="h-[15vh]">
-                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`http://localhost:8000${product.image}`} alt="" />
+                    <Image className="h-full w-auto rounded-lg" width={500} height={500} src={`https://marketplace.developerske.com${product && product.image}`} alt="" />
                 </div>
             </div>
         </div>
@@ -74,8 +82,12 @@ export default function Id()
         </div>
 
         <div className="shadow-lg bg-white rounded-xl py-8 px-2 bordered w-full md:w-1/3">
-           <div>
-            Report ad
+           <div className="flex justify-between">
+            <span>Report ad</span>
+            <Link href={{ pathname: "/products/edit/", query: { id: product && product.id } }} >
+              <FiEdit className="text-green-800 hover:cursor-pointer" />
+            </Link>
+            <FaTrash className="text-red-600 hover:cursor-pointer" onClick={()=>deleteProduct(product && product.id)} />
            </div>
           <div className="my-4 border rounded-lg p-3 flex items-center space-x-4">
               <Image width={10} height={10} className="w-10 h-10 rounded-full" src="/images/defaultProfile.png" alt="" />
@@ -110,7 +122,12 @@ export default function Id()
 
         </div>
       </div>
-      
+      :
+      <div className="h-[50vh] font-semibold text-2xl flex items-center justify-center">
+        Product not found!!
+      </div>
+    }
+   </>   
   )
 }
 

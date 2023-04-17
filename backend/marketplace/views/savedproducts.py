@@ -1,8 +1,8 @@
 import os
 from django.conf import settings
 from rest_framework.response import Response
-from marketplace.serializers.productSerializer import ProductSerializer
-from marketplace.models import SavedProducts, User
+from marketplace.serializers.savedproductSerializer import SavedProductSerializer
+from marketplace.models import SavedProducts, User, Products
 from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated, BasePermission, SAFE_METHODS
 from rest_framework import viewsets, status
@@ -26,7 +26,7 @@ class ReadOnly(BasePermission):
 # @permission_classes((IsAuthenticated, ))
 def savedProducts(request):    
     queryset = SavedProducts.objects.all().order_by('-id')
-    serializer = ProductSerializer(queryset, many=True)
+    serializer = SavedProductSerializer(queryset, many=True)
     return Response(serializer.data)
 
 
@@ -35,16 +35,24 @@ def savedProducts(request):
 @api_view(('POST',))
 # @permission_classes((IsAuthenticated, ))
 def saveProduct(request):    
-    user = User.objects.get(id=1)
-
-    serializer = ProductSerializer(data=request.data)       
-    if serializer.is_valid():
-        serializer.save(product="product", user=user)
-        return Response({"success":"Product saved!"}, status=201)
+    productid = request.data.get('id')
     
+    products_count = Products.objects.filter(pk=productid).count()  
+    product = Products.objects.get(pk=productid)
+
+    if products_count>0:
+        serializer = SavedProductSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(product=product, user=request.user)
+            return Response({"success":"Product saved to favourites!"}, status=201)
+        
+        else:
+            print("Serializers ", serializer.errors)
+            return Response({"error":"Something went wrong!"}, status=status.HTTP_406_NOT_ACCEPTABLE)
     else:
-        print("Serializers ", serializer.errors)
-        return Response({"error":"Something went wrong!"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+        return Response({"error":"Product does not exist"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+
 
 @csrf_exempt
 @api_view(('DELETE',))

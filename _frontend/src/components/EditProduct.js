@@ -1,29 +1,46 @@
 import { AuthContext } from '@/context/AuthContext';
 import { ProductContext } from '@/context/ProductContext';
+import GetProduct from '@/lib/Helper';
 import Image from 'next/image';
-import { useState } from 'react'
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react'
 import { useContext } from 'react';
+import Spinner from './_child/Spinner';
+import Error from './_child/Error';
+import {IMAGES_URL} from "../../config.json"
 
 
-function Add() 
+export default function EditProduct() 
 {
-    const {addProduct} = useContext(ProductContext);
+  const router = useRouter();
+  const { id } = router.query;
 
+    const {updateProduct} = useContext(ProductContext);
     const { authTokens} = useContext(AuthContext);
-    console.log("authToken s ", authTokens)
+    const { product, isLoading, isError } = GetProduct(id)
+    console.log("YYYYY ", process.env.baseURL)
 
+    
     const [title, setTitle] = useState();
     const [region, setRegion] = useState();
     const [color, setColor] = useState();
     const [price, setPrice] = useState();
     const [file, setFile] = useState();
     const [description, setDescription] = useState();
+    const [editFile, setEditFile] = useState();
     const [displayFile, setDisplayFile] = useState();
+
      
-    console.log("FIIILES ", file)
+    useEffect(()=>{
+    setColor(product && product.color);setRegion(product && product.region)
+    setDescription(product && product.description);setPrice(product && product.price)
+    setTitle(product && product.title);
+    setEditFile(product && product.image)
+    }, [])
+    
+    // console.log("Display ", 'https://marketplace.developerske.com/'+displayFile)
     const handleSubmit = e => 
     {    
-  
       e.preventDefault();
 
       let formData = new FormData()
@@ -34,15 +51,20 @@ function Add()
       formData.append("description", description);
       formData.append("image", file);
 
-      addProduct(formData);
+      updateProduct(id, formData);
+      console.log("ppp ", formData)
 
-      setTitle(""); setFile();  setDescription("");
+      // setTitle(""); setFile();  setDescription("");setColor()
+      // setRegion(""); setPrice("")
+      
     };
      
+    if(isLoading) return <Spinner/>
+    if(isError) return <Error />
 
   return (
     <div className="containder-fluid mx-auto min-h-[70vh]">
-    <h2 className='text-2xl font-bold mx-3 mt-10 text-center'>Sell Product</h2>
+    <h2 className='text-2xl font-bold mx-3 mt-10 text-center'>Edit Product</h2>
    
     <div className="h-fit px-5 font-sans">
             <form onSubmit={handleSubmit}  className='w-full shadow rounded-lg p-4'>                 
@@ -67,10 +89,13 @@ function Add()
                     <hr/>
                     <div className='flex'>
                       {
-                        displayFile?                      
-                        <Image width={50} height={50} className="h-16 object-cover " src={displayFile || ""  } alt="" />
-                        :""
+                        displayFile? 
+                         <Image width={50} height={50} className="h-16 object-cover " src={displayFile || ""  } alt="" /> 
+                        :<Image width={50} height={50} className="h-16 object-cover" src={`https://marketplace.developerske.com/${editFile || "" }` } alt="" />
+
+
                       }
+                      {/* <Image width={50} height={50} className="h-16 object-cover" src={`https://marketplace.developerske.com/${editFile || "" }` } alt="" /> */}
                       <div className='flex items-center mx-5 p-3 bg-gray-100'>
                           <input type="file"  onChange={(e) => {setFile(e.target.files[0]); setDisplayFile(URL.createObjectURL(e.target.files[0])); }} className="rounded "/>
                       </div>
@@ -94,4 +119,3 @@ function Add()
   )
 }
 
-export default Add

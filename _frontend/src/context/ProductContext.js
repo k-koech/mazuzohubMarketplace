@@ -9,10 +9,10 @@ const  SERVER_URL = config.SERVER_URL;
 
 export const ProductProvider = ({ children }) => 
 {
-  const {logoutUser} = useContext(AuthContext)
+  const {logout} = useContext(AuthContext)
   const {push} = useRouter();
   const [onDataChange, setOnDataChange] = useState(true)
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const authTokens = JSON.parse(sessionStorage.getItem("authTokens"));
   const [posts, setPosts] = useState([]);
@@ -46,7 +46,7 @@ export const ProductProvider = ({ children }) =>
         else if(response.detail)
         {
           setTimeout(() =>  toast.warning("Session expired!", { theme: "colored" }), 1000) 
-          logoutUser()
+          logout()
         }
         else
         {
@@ -56,23 +56,24 @@ export const ProductProvider = ({ children }) =>
         
     };
 
-           // Update Blog
-           const updateBlog = (id, formData) => {
-            fetch(`${SERVER_URL}/blogs/${id}`, {
+           // Update Product
+           const updateProduct = (id, formData) => {
+            console.log("data ", formData.title)
+            fetch(`${SERVER_URL}/products/update/${id}`, {
               method: "PATCH",
               headers: {
-                  // "Content-Type": "application/json",
                   Authorization: `Bearer ${authTokens.access}`
               },
               body: formData,
               })
               .then((response)=>response.json())
               .then((response) =>{
+                console.log("res ", response)
                 if (response.success) 
                 {
                   setOnDataChange(!onDataChange);
-                  navigate("/admin/blogs");
-                  window.location.reload(true);
+                  push("/");
+                  // window.location.reload(true);
                   toast.success(response.success, { theme: "colored" })
                 } 
                 
@@ -83,7 +84,7 @@ export const ProductProvider = ({ children }) =>
                 else if(response.detail)
                 {
                   setTimeout(() =>  toast.warning("Session expired!", { theme: "colored" }), 1000) 
-                  logoutUser()
+                  // logout()
                 }
                 else{
                   toast.error("Something went wrong!", { theme: "colored" })
@@ -94,21 +95,21 @@ export const ProductProvider = ({ children }) =>
           };
     
         // Get single blog
-        const getSingleBlog = (blog_id) => {
-          return fetch(`${SERVER_URL}/blogs/${blog_id}`, {
-            method: 'GET',
-             headers: {
-               Accept: 'application/json',
-             },
-           })
-           .then((response)=> response.json())
+        // const getSingleBlog = (blog_id) => {
+        //   return fetch(`${SERVER_URL}/blogs/${blog_id}`, {
+        //     method: 'GET',
+        //      headers: {
+        //        Accept: 'application/json',
+        //      },
+        //    })
+        //    .then((response)=> response.json())
 
-           }
+        //    }
 
 
-    // Delete Blog
-    const deleteBlog = (id) => {
-      fetch(`${SERVER_URL}/blogs/${id}`, {
+    // Delete Product
+    const deleteProduct = (id) => {
+      fetch(`${SERVER_URL}/products/${id}`, {
       method: "DELETE",
       headers: {
           "Content-Type": "application/json",
@@ -120,6 +121,7 @@ export const ProductProvider = ({ children }) =>
           if(response.success) 
           {
             setOnDataChange(!onDataChange);
+            push("/")
             toast.success(response.success, { theme: "colored" })
           } 
           else if(response.error)
@@ -129,7 +131,7 @@ export const ProductProvider = ({ children }) =>
           else if(response.detail)
           {
             setTimeout(() =>  toast.warning("Session expired!", { theme: "colored" }), 1000) 
-            logoutUser()
+            logout()
           }
           else
           {
@@ -140,20 +142,21 @@ export const ProductProvider = ({ children }) =>
   };
 
     // GET POSTS
-   useEffect(()=>{
-      fetch(`${SERVER_URL}/blogs`, {
-        method: 'GET',
-         headers: {
-           Accept: 'application/json',
-         },
-       })
-       .then((response)=> response.json())
-       .then((data)=>{
-          setPosts(data)
-      })
+  //  useEffect(()=>{
+  //     fetch(`${SERVER_URL}/products`, {
+  //       method: 'GET',
+  //        headers: {
+  //          Accept: 'application/json',
+  //        },
+  //      })
+  //      .then((response)=> response.json())
+  //      .then((data)=>{
+  //         setPosts(data)
+  //     })
 
-      setLoading(false);
-    }, [onDataChange])
+  //     setLoading(false);
+  //   }, [])
+      // setLoading(false);
 
 
 
@@ -161,10 +164,9 @@ export const ProductProvider = ({ children }) =>
     const contextData = 
     {
         addProduct,
-        posts,
-        updateBlog,
-        getSingleBlog,
-        deleteBlog
+        // posts,
+        updateProduct,
+        deleteProduct
     };
 
 

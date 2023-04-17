@@ -17,7 +17,7 @@ export default function Id({category})
 
 
 export async function getServerSideProps(req, res) {
-  const data = await fetch("http://127.0.0.1:8000/api/categories").then(res=>res.json());
+  const data = await fetch("https://marketplace.developerske.com/api/categories").then(res=>res.json());
   const {id} = req.query;
 
   if(id){
